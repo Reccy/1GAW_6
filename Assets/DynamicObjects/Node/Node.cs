@@ -22,6 +22,10 @@ public class Node : MonoBehaviour
     public bool IsLinesVisible => m_linesVisible;
     public bool IsLinesInvisible => !m_linesVisible;
 
+    public enum NodeType { STANDARD }
+    [SerializeField] private NodeType m_nodeType = NodeType.STANDARD;
+    public NodeType Type => m_nodeType;
+
     private void Awake()
     {
         m_controlProgram = FindObjectOfType<ControlProgram>();

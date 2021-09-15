@@ -15,8 +15,9 @@ public class ProgramMover : MonoBehaviour
     public bool IsStationary => m_currentState == State.STATIONARY;
     public bool IsMoving => m_currentState == State.MOVING;
 
-    [SerializeField] private float m_moveSpeed = 2.0f;
-    [SerializeField] private float m_minDistanceToNode = 0.05f;
+    [SerializeField] private float m_moveSpeed = 10.0f;
+    [SerializeField] private float m_minDistanceToNode = 0.001f;
+    [SerializeField] private bool m_propagatesVisibility = false;
 
     private Coroutine m_moveCoroutine;
 
@@ -50,7 +51,8 @@ public class ProgramMover : MonoBehaviour
         m_moveCoroutine = null;
         m_currentState = State.STATIONARY;
 
-        m_currentNode.PropagateVisibility();
+        if (m_propagatesVisibility)
+            m_currentNode.PropagateVisibility();
     }
 
     public bool CanTraverseTo(Node node)

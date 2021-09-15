@@ -1,22 +1,14 @@
 using UnityEngine;
 
-[RequireComponent(typeof(ProgramMover))]
 public class ControlProgram : MonoBehaviour
 {
     private ProgramMover m_mover;
+    private Level m_level;
 
     private void Awake()
     {
         m_mover = GetComponent<ProgramMover>();
-    }
-
-    private void Update()
-    {
-        // TODO: Rewired Input
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            m_mover.TraverseTo(m_mover.Connections[0]);
-        }
+        m_level = FindObjectOfType<Level>();
     }
 
     public bool CanTraverseTo(Node node)
@@ -27,5 +19,6 @@ public class ControlProgram : MonoBehaviour
     public void TraverseTo(Node node)
     {
         m_mover.TraverseTo(node);
+        m_level.NotifyPlayerTraversed(m_mover.CurrentNode, node);
     }
 }
