@@ -15,6 +15,14 @@ public class GravityObject : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Physics2D.simulationMode != SimulationMode2D.FixedUpdate)
+            return;
+
+        Simulate();
+    }
+
+    public void Simulate()
+    {
         Vector2 newForce = Vector2.zero;
 
         foreach (GravityField field in m_gravityFields)
