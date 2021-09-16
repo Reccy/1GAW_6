@@ -23,6 +23,7 @@ public class TrajectoryPhysicsScene : MonoBehaviour
 
         CreateSceneParameters sceneParams = new CreateSceneParameters();
         sceneParams.localPhysicsMode = LocalPhysicsMode.Physics2D;
+
         m_scene = SceneManager.CreateScene(SCENE_NAME, sceneParams);
 
         m_physicsScene = m_scene.GetPhysicsScene2D();
@@ -49,11 +50,14 @@ public class TrajectoryPhysicsScene : MonoBehaviour
             }
 
             SceneManager.MoveGameObjectToScene(copy.gameObject, m_scene);
+
+            m_fields[i] = copy;
         }
     }
 
     public Vector2[] SimulateTrajectory(GravityObject prediction, int iterations, Vector2 initialVelocity)
     {
+        // todo multiple predictions per sim
         if (m_prediction != null)
             Destroy(m_prediction.gameObject);
 
@@ -69,15 +73,11 @@ public class TrajectoryPhysicsScene : MonoBehaviour
         {
             points[i] = m_prediction.transform.position;
 
-            m_prediction.Simulate();
+            if (m_prediction.enabled)
+                m_prediction.Simulate();
 
             if (!m_physicsScene.Simulate(Time.fixedDeltaTime))
                 Debug.LogWarning("Simulation fail!");
-        }
-
-        for (int i = 0; i < iterations - 1; ++i)
-        {
-            Debug2.DrawArrow(points[i], points[i + 1], Color.green);
         }
 
         return points;

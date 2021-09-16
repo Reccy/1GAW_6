@@ -5,8 +5,6 @@ using Shapes;
 
 public class GravityObjectPrediction : MonoBehaviour
 {
-    private GravityObject m_gravityObject;
-    private GravityField[] m_gravityFields;
     private TrajectoryPhysicsScene m_physicsScene;
     private Rigidbody2D m_rigidbody;
 
@@ -20,8 +18,6 @@ public class GravityObjectPrediction : MonoBehaviour
 
     private void Awake()
     {
-        m_gravityObject = GetComponent<GravityObject>();
-        m_gravityFields = FindObjectsOfType<GravityField>();
         m_points = new PolylinePoint[m_iterations];
         m_physicsScene = FindObjectOfType<TrajectoryPhysicsScene>();
         m_rigidbody = GetComponent<Rigidbody2D>();
@@ -57,6 +53,16 @@ public class GravityObjectPrediction : MonoBehaviour
     {
         GameObject result = Instantiate(m_predictionPrefab);
         result.transform.position = transform.position;
-        return result.GetComponent<GravityObject>();
+
+        GravityObject obj = result.GetComponent<GravityObject>();
+        obj.simInFixedUpdate = false;
+
+        return obj;
+    }
+
+    private void OnDestroy()
+    {
+        if (m_polyline != null)
+            Destroy(m_polyline.gameObject);
     }
 }

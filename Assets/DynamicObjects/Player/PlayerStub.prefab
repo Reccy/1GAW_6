@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 44294856, guid: 1674e818215642242903594006141d52, type: 3}
+      propertyPath: simInFixedUpdate
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1403430828693761904, guid: 1674e818215642242903594006141d52, type: 3}
       propertyPath: m_Enabled
       value: 0
