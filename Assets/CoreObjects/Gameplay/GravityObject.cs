@@ -19,7 +19,7 @@ public class GravityObject : MonoBehaviour
 
         foreach (GravityField field in m_gravityFields)
         {
-            newForce += field.CalculateGravity(this);
+            newForce += field.CalculateGravity(transform.position);
         }
 
         m_rigidbody.AddForce(newForce);

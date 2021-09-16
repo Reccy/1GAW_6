@@ -226,7 +226,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_surfaceGravity: 9.81
-  m_radius: 0.5
 --- !u!50 &7058952879733274507
 Rigidbody2D:
   serializedVersion: 4
