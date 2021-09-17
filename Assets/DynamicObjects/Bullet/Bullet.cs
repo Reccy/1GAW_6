@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     private Rigidbody2D m_rigidbody;
     [SerializeField] private float m_lifetimeSeconds = 10.0f;
-    private bool m_selfDestructEnabled = false;
+    [SerializeField] private bool m_selfDestructEnabled = false;
 
     private void Awake()
     {
@@ -46,7 +46,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<GravityField>())
+        if (collision.gameObject.GetComponent<GravityField>() || collision.gameObject.GetComponent<Player>())
         {
             DestroyBullet();
         }

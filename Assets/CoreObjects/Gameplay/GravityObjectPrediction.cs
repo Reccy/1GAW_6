@@ -86,6 +86,18 @@ public class GravityObjectPrediction : MonoBehaviour
         return obj;
     }
 
+    private void OnEnable()
+    {
+        if (m_polyline != null)
+            m_polyline.gameObject.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        if (m_polyline != null)
+            m_polyline.gameObject.SetActive(false);
+    }
+
     private void OnDestroy()
     {
         if (m_polyline != null)

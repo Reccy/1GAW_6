@@ -12,9 +12,13 @@ public class Player : MonoBehaviour
     private bool m_isThrusting = false;
     private Vector2 m_aim = Vector2.zero;
 
-    private int m_fuelUsed = 0;
+    public bool IsThrusting => m_isThrusting;
+
+    [SerializeField] private int m_fuelRemaining = 0;
     [SerializeField] private int m_fuelUsedPerThrust = 1;
-    public int FuelUsed => m_fuelUsed;
+    [SerializeField] public int FuelRemaining => m_fuelRemaining;
+
+    public bool IsOutOfFuel => m_fuelRemaining == 0;
 
     [SerializeField] private float m_framesPerShoot = 4;
     private float m_shootFrames = 0;
@@ -27,8 +31,14 @@ public class Player : MonoBehaviour
     [SerializeField] Transform m_bulletSpawn;
     [SerializeField] float m_bulletInitialVelMul = 2.0f;
 
+    [SerializeField] private float m_ammo = 100;
+    public float Ammo => m_ammo;
+
     private bool m_isInOrbit = false;
     public bool IsInOrbit => m_isInOrbit;
+
+    private bool m_dead = false;
+    public bool IsDead => m_dead;
 
     private float m_timeInOrbit = 0;
     [SerializeField] private float m_timeInOrbitGoal = 10.0f;
@@ -63,6 +73,9 @@ public class Player : MonoBehaviour
         if (m_timeInOrbit > m_timeInOrbitGoal)
             return;
 
+        if (m_dead)
+            return;
+
         LookAtCursor();
 
         if (m_isShooting)
@@ -86,7 +99,7 @@ public class Player : MonoBehaviour
 
         m_isInOrbit = m_orbitGoals.PlayerInGoal(this);
 
-        if (m_isInOrbit)
+        if (m_isInOrbit && !m_isThrusting)
         {
             m_timeInOrbit += Time.deltaTime;
         }
@@ -124,22 +137,45 @@ public class Player : MonoBehaviour
         if (m_shootFrames > 0)
             return;
 
+        if (m_ammo == 0)
+            return;
+
         m_shootFrames = m_framesPerShoot;
 
-        // todo: pool objects
+        // todo: pool objects (hahaha i dont have time)
         Bullet bullet = Instantiate<Bullet>(m_bulletPrefab);
         bullet.transform.position = m_bulletSpawn.position;
         bullet.transform.rotation = m_bulletSpawn.rotation;
         bullet.SetVelocity(m_rigidbody.velocity + (Vector2)transform.up * m_bulletInitialVelMul);
+
+        m_ammo -= 1;
     }
 
     private void Thrust()
     {
+        if (IsOutOfFuel)
+            return;
+
         m_exhaustParticles.Play(false);
         m_rigidbody.AddForce(transform.up * m_thrustForce);
 
         Debug.DrawLine(transform.position, transform.position + transform.up, Color.red);
 
-        m_fuelUsed += m_fuelUsedPerThrust;
+        m_fuelRemaining = Mathf.Max(0, m_fuelRemaining - m_fuelUsedPerThrust);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<GravityField>() || collision.gameObject.GetComponent<Bullet>())
+        {
+            DestroyPlayer();
+        }
+    }
+
+    private void DestroyPlayer()
+    {
+        m_dead = true;
+
+        gameObject.SetActive(false);
     }
 }

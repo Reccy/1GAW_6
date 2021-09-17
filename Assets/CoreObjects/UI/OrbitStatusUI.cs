@@ -11,9 +11,11 @@ public class OrbitStatusUI : MonoBehaviour
     [SerializeField] private Color m_goalColor;
     [SerializeField] private Color m_validatingColor;
     [SerializeField] private Color m_outOfGoalColor;
+    [SerializeField] private Color m_thrustWinColor;
     [SerializeField] private string m_winText;
     [SerializeField] private string m_winningText;
     [SerializeField] private string m_loseText;
+    [SerializeField] private string m_thrustWinText;
 
     private void Awake()
     {
@@ -25,7 +27,12 @@ public class OrbitStatusUI : MonoBehaviour
     {
         if (m_player.IsInOrbit)
         {
-            if (m_player.TimeInOrbit < m_player.TimeInOrbitGoal)
+            if (m_player.IsThrusting)
+            {
+                m_text.text = m_thrustWinText;
+                m_text.color = m_thrustWinColor;
+            }
+            else if (m_player.TimeInOrbit < m_player.TimeInOrbitGoal)
             {
                 m_text.text = m_winningText;
                 m_text.color = m_validatingColor;

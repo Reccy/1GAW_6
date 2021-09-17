@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 44294856}
   - component: {fileID: 8271590452756440283}
   - component: {fileID: 5233967361365309526}
+  - component: {fileID: 7068713327900576906}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -244,6 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f7fd208593b76041a7fa3bf4b87fc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_fuelRemaining: 200
   m_fuelUsedPerThrust: 1
   m_framesPerShoot: 4
   m_thrustForce: 10
@@ -251,6 +253,8 @@ MonoBehaviour:
   m_bulletPrefab: {fileID: 597984039445552440, guid: 6008f429f293e254087051159b8197e0, type: 3}
   m_bulletSpawn: {fileID: 4084990884482309831}
   m_bulletInitialVelMul: 2
+  m_ammo: 25
+  m_timeInOrbitGoal: 10
 --- !u!114 &44294856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,6 +309,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &7068713327900576906
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5134532711314847189}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.03
 --- !u!1 &5411880398935800337
 GameObject:
   m_ObjectHideFlags: 0
