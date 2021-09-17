@@ -10,6 +10,10 @@ public class Player : MonoBehaviour
     private bool m_isThrusting = false;
     private Vector2 m_aim = Vector2.zero;
 
+    private int m_fuelUsed = 0;
+    [SerializeField] private int m_fuelUsedPerThrust = 1;
+    public int FuelUsed => m_fuelUsed;
+
     [SerializeField] private float m_framesPerShoot = 4;
     private float m_shootFrames = 0;
 
@@ -108,5 +112,7 @@ public class Player : MonoBehaviour
         m_rigidbody.AddForce(transform.up * m_thrustForce);
 
         Debug.DrawLine(transform.position, transform.position + transform.up, Color.red);
+
+        m_fuelUsed += m_fuelUsedPerThrust;
     }
 }
