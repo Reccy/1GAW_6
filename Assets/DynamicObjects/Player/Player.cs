@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
     private Rewired.Player m_player;
     private const int m_playerID = 0;
 
+    public Rewired.Player RewiredPlayer => m_player;
+
     private bool m_isShooting = false;
     private bool m_isThrusting = false;
     private Vector2 m_aim = Vector2.zero;
@@ -25,10 +27,23 @@ public class Player : MonoBehaviour
     [SerializeField] Transform m_bulletSpawn;
     [SerializeField] float m_bulletInitialVelMul = 2.0f;
 
+    private bool m_isInOrbit = false;
+    public bool IsInOrbit => m_isInOrbit;
+
+    private float m_timeInOrbit = 0;
+    [SerializeField] private float m_timeInOrbitGoal = 10.0f;
+
+    public float TimeInOrbit => m_timeInOrbit;
+    public float TimeInOrbitGoal => m_timeInOrbitGoal;
+    public bool Won => TimeInOrbit >= TimeInOrbitGoal;
+
+    private OrbitGoal m_orbitGoals;
+
     private void Start()
     {
         m_player = ReInput.players.GetPlayer(m_playerID);
         m_rigidbody = GetComponent<Rigidbody2D>();
+        m_orbitGoals = FindObjectOfType<OrbitGoal>();
     }
 
     private void Update()
@@ -44,6 +59,10 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Won, don't accept any more player input!!!
+        if (m_timeInOrbit > m_timeInOrbitGoal)
+            return;
+
         LookAtCursor();
 
         if (m_isShooting)
@@ -63,6 +82,17 @@ public class Player : MonoBehaviour
         if (m_shootFrames > 0)
         {
             m_shootFrames -= 1;
+        }
+
+        m_isInOrbit = m_orbitGoals.PlayerInGoal(this);
+
+        if (m_isInOrbit)
+        {
+            m_timeInOrbit += Time.deltaTime;
+        }
+        else
+        {
+            m_timeInOrbit = 0;
         }
     }
 
