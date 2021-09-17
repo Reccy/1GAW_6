@@ -244,13 +244,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f7fd208593b76041a7fa3bf4b87fc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_fuelUsedPerThrust: 1
   m_framesPerShoot: 4
   m_thrustForce: 10
   m_exhaustParticles: {fileID: 3634859152809484719}
   m_bulletPrefab: {fileID: 597984039445552440, guid: 6008f429f293e254087051159b8197e0, type: 3}
   m_bulletSpawn: {fileID: 4084990884482309831}
   m_bulletInitialVelMul: 2
-  m_startingVelocity: {x: 7, y: -1}
 --- !u!114 &44294856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,6 +264,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simInFixedUpdate: 1
+  m_applyInitialVelocityInEditMode: 0
+  m_initialVelocity: {x: 1, y: 0}
 --- !u!114 &8271590452756440283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,10 +279,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_polyline: {fileID: 6399463555152062311}
-  m_iterations: 128
+  m_iterations: 512
   m_predictionPrefab: {fileID: 1325342750040834236, guid: 3ae8ff2a37e21e34daf1bd42c7e30f9b, type: 3}
   m_startColor: {r: 0.18823427, g: 0.8867924, b: 0.7992585, a: 0.9019608}
   m_endColor: {r: 0, g: 0, b: 0, a: 0}
+  m_checkOrbit: 0
 --- !u!50 &5233967361365309526
 Rigidbody2D:
   serializedVersion: 4

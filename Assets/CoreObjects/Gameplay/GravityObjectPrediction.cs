@@ -14,13 +14,37 @@ public class GravityObjectPrediction : MonoBehaviour
     [SerializeField] Color m_startColor = Color.white;
     [SerializeField] Color m_endColor = Color.black;
 
+    private GravityObject m_gravityObject;
+
     PolylinePoint[] m_points;
+
+    [InspectorButton("CheckOrbit")]
+    public bool m_checkOrbit;
+
+    private void CheckOrbit()
+    {
+        m_points = new PolylinePoint[m_iterations];
+        m_rigidbody = GetComponent<Rigidbody2D>();
+        m_physicsScene = FindObjectOfType<TrajectoryPhysicsScene>();
+        m_gravityObject = GetComponent<GravityObject>();
+
+        m_points = CalculatePoints();
+
+        Polyline polyline = Instantiate(m_polyline);
+        //polyline.hideFlags = HideFlags.DontSave;
+
+        polyline.transform.parent = null;
+        polyline.transform.localPosition = Vector2.zero;
+
+        polyline.SetPoints(m_points);
+    }
 
     private void Awake()
     {
         m_points = new PolylinePoint[m_iterations];
         m_physicsScene = FindObjectOfType<TrajectoryPhysicsScene>();
         m_rigidbody = GetComponent<Rigidbody2D>();
+        m_gravityObject = GetComponent<GravityObject>();
 
         m_polyline.transform.parent = null;
         m_polyline.transform.localPosition = Vector2.zero;
@@ -28,13 +52,15 @@ public class GravityObjectPrediction : MonoBehaviour
 
     private void Update()
     {
-        CalculatePoints();
+        m_points = CalculatePoints();
         m_polyline.SetPoints(m_points);
     }
 
-    private void CalculatePoints()
+    private PolylinePoint[] CalculatePoints()
     {
-        Vector2[] points = m_physicsScene.SimulateTrajectory(CreateStub(), m_iterations, m_rigidbody.velocity);
+        Vector2[] points;
+
+        points = m_physicsScene.SimulateTrajectory(CreateStub(), m_iterations, m_gravityObject.Velocity);
 
         for (int i = 0; i < points.Length; ++i)
         {
@@ -46,7 +72,7 @@ public class GravityObjectPrediction : MonoBehaviour
             m_points[i].color = c;
         }
 
-        m_polyline.SetPoints(m_points);
+        return m_points;
     }
 
     private GravityObject CreateStub()

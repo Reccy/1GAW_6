@@ -24,14 +24,11 @@ public class Player : MonoBehaviour
     [SerializeField] Bullet m_bulletPrefab;
     [SerializeField] Transform m_bulletSpawn;
     [SerializeField] float m_bulletInitialVelMul = 2.0f;
-    [SerializeField] Vector2 m_startingVelocity;
 
     private void Start()
     {
         m_player = ReInput.players.GetPlayer(m_playerID);
         m_rigidbody = GetComponent<Rigidbody2D>();
-
-        m_rigidbody.AddForce(m_startingVelocity, ForceMode2D.Impulse);
     }
 
     private void Update()

@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: simInFixedUpdate
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 44294856, guid: 1674e818215642242903594006141d52, type: 3}
+      propertyPath: m_applyInitialVelocityInEditMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1403430828693761904, guid: 1674e818215642242903594006141d52, type: 3}
       propertyPath: m_Enabled
       value: 0

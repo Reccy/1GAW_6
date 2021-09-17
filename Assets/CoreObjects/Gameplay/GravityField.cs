@@ -7,10 +7,46 @@ public class GravityField : MonoBehaviour
 
     [SerializeField] private float m_surfaceGravity;
 
+    private GamePhysicsScene m_phsicsScene;
+
     private void Awake()
     {
         m_circleCollider = GetComponent<CircleCollider2D>();
         m_radius = m_circleCollider.radius;
+    }
+
+    private void OnEnable()
+    {
+        foreach (GameObject obj in gameObject.scene.GetRootGameObjects())
+        {
+            GamePhysicsScene sc = obj.GetComponent<GamePhysicsScene>();
+
+            if (sc != null)
+            {
+                m_phsicsScene = sc;
+                sc.Register(this);
+                break;
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        m_phsicsScene.Unregister(this);
+    }
+
+    public void Register(GamePhysicsScene scene)
+    {
+        m_phsicsScene = scene;
+        scene.Register(this);
+    }
+
+    public void Unregister()
+    {
+        if (m_phsicsScene == null)
+            return;
+
+        m_phsicsScene.Unregister(this);
     }
 
     // https://www.geeksforgeeks.org/acceleration-due-to-gravity/
