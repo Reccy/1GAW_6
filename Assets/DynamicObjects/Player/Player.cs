@@ -61,6 +61,12 @@ public class Player : MonoBehaviour
         m_isShooting = m_player.GetButton("Shoot");
         m_isThrusting = m_player.GetButton("Thrust");
 
+        if (m_ammo == 0)
+            m_isShooting = false;
+
+        if (IsOutOfFuel)
+            m_isThrusting = false;
+
         m_aim = new Vector2(m_player.GetAxis("AimHorizontal"), m_player.GetAxis("AimVertical"));
 
         if (m_aim.sqrMagnitude > 0)

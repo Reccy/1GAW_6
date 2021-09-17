@@ -43,3 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a8cb6ce27efce4b97a993b5efe61e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_lowFuelColor: {r: 0.95686275, g: 1, b: 0.4, a: 0.8784314}
+  m_outOfFuelColor: {r: 1, g: 0.1764706, b: 0.18431373, a: 0.92156863}
+  m_wonCanvas: {fileID: 0}
+  m_lostScreen: {fileID: 0}
+  m_outOfFuelScreen: {fileID: 0}
+  m_nextLevel: 0
