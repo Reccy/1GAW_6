@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simInFixedUpdate: 1
-  m_applyInitialVelocityInEditMode: 0
+  m_applyInitialVelocityInEditMode: 1
   m_initialVelocity: {x: 1, y: 0}
 --- !u!114 &8271590452756440283
 MonoBehaviour:
